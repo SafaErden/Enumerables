@@ -1,12 +1,18 @@
 module Enumerable
   def my_each
-      return to_enum(:my_each) unless block_given?
-      for num in self
-        yield(num)
-      end
+    return to_enum(:my_each) unless block_given?
+    for num in self
+      yield(num)
+    end
   end
 
   def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+    i=0
+    for num in self
+      yield(num,i)
+      i+=1
+    end
   end
 
   def my_select
@@ -50,15 +56,42 @@ array.each{|val| puts "#{val}*2= #{val*2}"}
 puts "Hash-----"
 hash.each{|key,val| puts "#{key}: #{val}*2= #{val*2}"}
 puts
-puts "each without block: "
-puts "Array-----"
-p array.each
-puts "Hash-----"
-p hash.each
-puts
 puts "my_each without block: "
 puts "Array-----"
 p array.my_each
 puts "Hash-----"
 p hash.my_each
+puts
+puts "each without block: "
+puts "Array-----"
+p array.each
+puts "Hash-----"
+p hash.each
+puts "-----------------------------------------------------------"
+puts
+puts "my_each_with_index AND each_with_index METHOD COMPARISON"
+puts
+puts "my_each_with_index with block: "
+puts "Array-----"
+array.my_each_with_index{|item,idx| puts "#{idx}: #{item}"}
+puts "Hash-----"
+hash.my_each_with_index{|item,idx| puts "#{idx}: #{item}"}
+puts 
+puts "each_with_index with block: "
+puts "Array-----"
+array.each_with_index{|item,idx| puts "#{idx}: #{item}"}
+puts "Hash-----"
+hash.each_with_index{|item,idx| puts "#{idx}: #{item}"}
+puts
+puts "my_each_with_index without block: "
+puts "Array-----"
+p array.my_each_with_index
+puts "Hash-----"
+p hash.my_each_with_index
+puts
+puts "each_with_index without block: "
+puts "Array-----"
+p array.each_with_index
+puts "Hash-----"
+p hash.each_with_index
 puts "-----------------------------------------------------------"
