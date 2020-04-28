@@ -3,15 +3,15 @@
 > This is the first dolo project of the Microverse Ruby curriculum. In this project Ruby enumerable methods are created from the scracth.
 
 ## Created Methods Listed Below
-#my_each method instead of #each
-#my_each_with_index method instead of #each_with_index
-#my_select method instead of #select
-#my_all? method instead of #all?
-#my_any? method instead of #any?
-#my_none? method instead of #none?
-#my_count method instead of #count
-#my_map method instead of #map
-#my_inject method Implementation of #inject
+###my_each method instead of #each
+###my_each_with_index method instead of #each_with_index
+###my_select method instead of #select
+###my_all? method instead of #all?
+###my_any? method instead of #any?
+###my_none? method instead of #none?
+###my_count method instead of #count
+###my_map method instead of #map
+###my_inject method Implementation of #inject
 
 ## Built With
 
