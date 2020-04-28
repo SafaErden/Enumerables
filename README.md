@@ -1,6 +1,6 @@
 # Enumerable Methods
 
-> This is the first dolo project of the Microverse Ruby curriculum. In this project Ruby enumerable methods are created from the scracth.
+> This is the first solo project of the Microverse Ruby curriculum. In this project Ruby enumerable methods are created from the scracth.
 
 ## Created Methods Listed Below
 - ### my_each method instead of #each
