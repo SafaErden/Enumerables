@@ -49,8 +49,8 @@ module Enumerable
       end
       return true
     end
-    if !block_given?
-      my_each { |val| return false if val == false || val==nil }
+    unless block_given?
+      my_each { |val| return false if val == false || val.nil? }
       return true
     end
     my_each do |num|
@@ -70,8 +70,8 @@ module Enumerable
       end
       return false
     end
-    if !block_given?
-      my_each { |val| return true if val != false && val!=nil }
+    unless block_given?
+      my_each { |val| return true if val != false && !val.nil? }
       return false
     end
 
@@ -92,8 +92,8 @@ module Enumerable
       end
       return true
     end
-    if !block_given?
-      my_each { |val| return false if val != false && val!=nil }
+    unless block_given?
+      my_each { |val| return false if val != false && !val.nil? }
       return true
     end
 
@@ -104,10 +104,10 @@ module Enumerable
   end
 
   def my_count(var = nil)
-    i=0
+    i = 0
     unless var.nil?
-     my_each { |val| i+=1 if val==var }
-     return i
+      my_each { |val| i += 1 if val == var }
+      return i
     end
     return size unless block_given?
 
@@ -153,9 +153,9 @@ module Enumerable
     end
 
     if arr.my_all?(String)
-      str=""
+      str = ''
       arr.my_each { |val| str = yield(str, val) }
-     return str
+      return str
     end
 
     arr.my_each { |num| return arr unless num.is_a?(Numeric) }
@@ -168,14 +168,14 @@ module Enumerable
     return to_enum(:my_inject) unless block_given?
 
     arr.my_each { |num| res = yield(res, num) }
-    
+
     res
   end
 end
 
 def multiply_els(arr)
   search = proc { |memo, word| memo.length > word.length ? memo : word }
-  arr.my_inject(&search) 
+  arr.my_inject(&search)
 end
 
 # rubocop: enable Metrics/ModuleLength
