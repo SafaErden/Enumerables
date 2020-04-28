@@ -16,6 +16,24 @@ module Enumerable
   end
 
   def my_select
+    return to_enum(:my_select) unless block_given?
+    if self.is_a?(Array)
+      arr=[]
+      self.my_each do |num| 
+       if yield(num)
+        arr<<num
+       end
+      end
+    arr
+    elsif self.is_a?(Hash)
+      hash={}
+      self.each do |key,val| 
+        if yield(key,val)
+          hash[key]=val
+        end
+      end
+     hash
+    end
   end
 
   def my_all?
@@ -94,4 +112,31 @@ puts "Array-----"
 p array.each_with_index
 puts "Hash-----"
 p hash.each_with_index
+puts "-----------------------------------------------------------"
+puts
+puts "my_select AND select METHOD COMPARISON"
+puts
+puts "my_select with block: "
+puts "Array-----"
+p array.my_select{|val| val>2}
+puts "Hash-----"
+p hash.my_select{|key,val| val>2}
+puts 
+puts "select with block: "
+puts "Array-----"
+p array.select{|val| val>2}
+puts "Hash-----"
+p hash.select{|key,val| val>2}
+puts
+puts "my_select without block: "
+puts "Array-----"
+p array.my_select
+puts "Hash-----"
+p hash.my_select
+puts
+puts "select without block: "
+puts "Array-----"
+p array.select
+puts "Hash-----"
+p hash.select
 puts "-----------------------------------------------------------"
