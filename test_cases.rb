@@ -246,5 +246,3 @@ p array.my_inject
 puts 'Hash-----'
 p hash.my_inject
 puts '-----------------------------------------------------------'
-puts 'TEST my_inject with multiply_els METHOD'
-p multiply_els(array)

@@ -140,7 +140,7 @@ module Enumerable
   end
 
   def my_inject(in1 = nil, in2 = nil)
-    res = 0
+    res = nil
     arr = !is_a?(Array) ? to_a.flatten : flatten
     operator = nil
     res = in1.nil? || !in1.is_a?(Numeric) ? 0 : in1
@@ -150,6 +150,12 @@ module Enumerable
       operator = in1
     elsif in2.is_a?(Symbol)
       operator = in2
+    end
+
+    if arr.my_all?(String)
+      str=""
+      arr.my_each { |val| str = yield(str, val) }
+     return str
     end
 
     arr.my_each { |num| return arr unless num.is_a?(Numeric) }
@@ -162,16 +168,19 @@ module Enumerable
     return to_enum(:my_inject) unless block_given?
 
     arr.my_each { |num| res = yield(res, num) }
+    
     res
   end
 end
 
 def multiply_els(arr)
-  arr.my_inject(:+)
+  search = proc { |memo, word| memo.length > word.length ? memo : word }
+  arr.my_inject(&search) 
 end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
-# require './test_cases.rb'
-p [1, 1, 2 ,3].my_count(1)  #should return 2
+require './test_cases.rb'
+words = %w[dog door rod blade]
+p multiply_els(words)
