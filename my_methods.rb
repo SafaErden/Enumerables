@@ -9,7 +9,7 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
     i=0
-    for num in self
+    self.my_each do |num|
       yield(num,i)
       i+=1
     end
@@ -27,7 +27,7 @@ module Enumerable
     arr
     elsif self.is_a?(Hash)
       hash={}
-      self.each do |key,val| 
+      self.my_each do |key,val| 
         if yield(key,val)
           hash[key]=val
         end
@@ -37,6 +37,13 @@ module Enumerable
   end
 
   def my_all?
+    return true unless block_given?
+    self.my_each do |num| 
+    if !yield(num)
+    return false
+    end
+   end
+   true
   end
 
   def my_any?
@@ -139,4 +146,31 @@ puts "Array-----"
 p array.select
 puts "Hash-----"
 p hash.select
+puts "-----------------------------------------------------------"
+puts
+puts "my_all? AND all? METHOD COMPARISON"
+puts
+puts "my_all? with block: "
+puts "Array-----"
+p array.my_all?{|val| val>2}
+puts "Hash-----"
+p hash.my_all?{|key,val| val>2}
+puts 
+puts "select with block: "
+puts "Array-----"
+p array.all?{|val| val>2}
+puts "Hash-----"
+p hash.all?{|key,val| val>2}
+puts
+puts "my_all? without block: "
+puts "Array-----"
+p array.my_all?
+puts "Hash-----"
+p hash.my_all?
+puts
+puts "all? without block: "
+puts "Array-----"
+p array.all?
+puts "Hash-----"
+p hash.all?
 puts "-----------------------------------------------------------"
