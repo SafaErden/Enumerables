@@ -140,18 +140,43 @@ module Enumerable
   end
 
   def my_inject(in1=nil,in2=nil)
-    return to_enum(:my_inject) unless block_given?
-    i=0
-    if self.is_a?(Array)
-      my_each do |num| 
-       i+=yield(num)
-      end
-    elsif self.is_a?(Hash)
-      my_each do |key,val| 
-        i+=yield(key,val)
-      end
+    res=0
+    if !is_a?(Array)
+      arr=self.to_a.flatten 
+    else 
+      arr=self.flatten 
     end
-    i
+    operator=nil
+    in1==nil || !in1.is_a?(Numeric) ? res=0 : res=in1
+    if in1==nil && in2==nil && !block_given? 
+       return to_enum(:my_inject) 
+    end
+    
+    if in1.is_a?(Symbol) 
+       operator=in1
+    elsif in2.is_a?(Symbol) 
+       operator=in2
+    end
+
+    if operator!=nil
+      arr.my_each do |num| 
+        if !num.is_a?(Numeric)
+          return arr
+        end
+        res=res.send(operator, num)
+      end
+      return res
+    end
+    
+    return to_enum(:my_inject) unless block_given?
+    
+    arr.my_each do |num| 
+      if !num.is_a?(Numeric)
+        return arr
+      end
+      res=yield(res,num)
+    end
+    return res
   end
 end
 
@@ -389,29 +414,19 @@ puts "my_inject AND inject METHOD COMPARISON"
 puts
 puts "my_inject with block: "
 puts "Array-----"
-#p array.my_inject{|val| val>2}
+p array.my_inject(5.0,:/){|sum, n| sum * n } 
 puts "Hash-----"
-#p hash.my_inject{|key,val| key=2}
+p hash.my_inject(5.0,:/){|sum, n| sum * n } 
 puts 
 puts "inject with block: "
 puts "Array-----"
-p array.inject {|sum, n| sum + n } 
+p array.my_inject(5.0,:/){|sum, n| sum * n } 
 puts "Hash-----"
-p hash.inject {|sum, n| sum + n } 
+p hash.my_inject(5.0,:/){|sum, n| sum * n } 
 puts
 puts "my_inject without block: "
 puts "Array-----"
-#p array.my_inject
+p array.my_inject
 puts "Hash-----"
-#p hash.my_inject
-puts
-puts "inject without block: "
-puts "Array-----"
-#p array.inject
-puts "Hash-----"
-#p hash.inject
+p hash.my_inject
 puts "-----------------------------------------------------------"
-p [nil, false, true, []].my_none? # should return false
-p %w[dog bird fish].my_none?(5) # should return true
-p [3, 3, 3].my_all?(3<1) # should return true
-p %w[1 2 3].my_none?(String) # should return false
