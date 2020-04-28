@@ -67,6 +67,14 @@ module Enumerable
   end
 
   def my_count
+    return self.size unless block_given?
+    i=0
+    self.my_each do |num| 
+    if yield(num)
+    i+=1
+    end
+   end
+   i
   end
 
   def my_map
@@ -241,4 +249,31 @@ puts "Array-----"
 p array.none?
 puts "Hash-----"
 p hash.none?
+puts "-----------------------------------------------------------"
+puts
+puts "my_count AND count METHOD COMPARISON"
+puts
+puts "my_count with block: "
+puts "Array-----"
+p array.my_count{|val| val>2}
+puts "Hash-----"
+p hash.my_count{|key,val| val>2}
+puts 
+puts "count with block: "
+puts "Array-----"
+p array.count{|val| val>2}
+puts "Hash-----"
+p hash.count{|key,val| val>2}
+puts
+puts "my_count without block: "
+puts "Array-----"
+p array.my_count
+puts "Hash-----"
+p hash.my_count
+puts
+puts "count without block: "
+puts "Array-----"
+p array.count
+puts "Hash-----"
+p hash.count
 puts "-----------------------------------------------------------"
