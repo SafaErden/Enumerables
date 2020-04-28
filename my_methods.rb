@@ -92,7 +92,10 @@ module Enumerable
       end
       return true
     end
-    return false unless block_given?
+    if !block_given?
+      my_each { |val| return false if val != false && val!=nil }
+      return true
+    end
 
     my_each do |num|
       return false if yield(num)
@@ -166,6 +169,5 @@ end
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
 # require './test_cases.rb'
-p [1, 2, 3].my_any? #should return true
-p [1, 2, nil].my_any? #should return true
-p [false, false, nil].my_any? #should return false
+p [false, nil, false].my_none? #should return true
+p [1, 'demo', 2.2].my_none? #should return false
