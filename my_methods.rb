@@ -128,11 +128,7 @@ module Enumerable
 
   def my_inject(in1 = nil, in2 = nil)
     res = 0
-    arr = if !is_a?(Array)
-            to_a.flatten
-          else
-            flatten
-          end
+    arr = !is_a?(Array) ? to_a.flatten : flatten
     operator = nil
     res = in1.nil? || !in1.is_a?(Numeric) ? 0 : in1
     return to_enum(:my_inject) if in1.nil? && in2.nil? && !block_given?
@@ -143,24 +139,22 @@ module Enumerable
       operator = in2
     end
 
-    unless operator.nil?
-      arr.my_each do |num|
-        return arr unless num.is_a?(Numeric)
+    arr.my_each { |num| return arr unless num.is_a?(Numeric) }
 
-        res = res.send(operator, num)
-      end
+    unless operator.nil?
+      arr.my_each { |num| res = res.send(operator, num) }
       return res
     end
 
     return to_enum(:my_inject) unless block_given?
 
-    arr.my_each do |num|
-      return arr unless num.is_a?(Numeric)
-
-      res = yield(res, num)
-    end
+    arr.my_each { |num| res = yield(res, num) }
     res
   end
+end
+
+def multiply_els(arr)
+  arr.my_inject(:+)
 end
 
 # rubocop: enable Metrics/ModuleLength
@@ -413,3 +407,5 @@ p array.my_inject
 puts 'Hash-----'
 p hash.my_inject
 puts '-----------------------------------------------------------'
+puts 'TEST my_inject with multiply_els METHOD'
+p multiply_els(array)
