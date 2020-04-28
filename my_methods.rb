@@ -47,6 +47,13 @@ module Enumerable
   end
 
   def my_any?
+    return true unless block_given?
+    self.my_each do |num| 
+    if !yield(num)
+    return true
+    end
+   end
+   false
   end
 
   def my_none?
@@ -156,7 +163,7 @@ p array.my_all?{|val| val>2}
 puts "Hash-----"
 p hash.my_all?{|key,val| val>2}
 puts 
-puts "select with block: "
+puts "all? with block: "
 puts "Array-----"
 p array.all?{|val| val>2}
 puts "Hash-----"
@@ -173,4 +180,31 @@ puts "Array-----"
 p array.all?
 puts "Hash-----"
 p hash.all?
+puts "-----------------------------------------------------------"
+puts
+puts "my_any? AND any? METHOD COMPARISON"
+puts
+puts "my_any? with block: "
+puts "Array-----"
+p array.my_any?{|val| val>2}
+puts "Hash-----"
+p hash.my_any?{|key,val| val>2}
+puts 
+puts "any? with block: "
+puts "Array-----"
+p array.any?{|val| val>2}
+puts "Hash-----"
+p hash.any?{|key,val| val>2}
+puts
+puts "my_any? without block: "
+puts "Array-----"
+p array.my_any?
+puts "Hash-----"
+p hash.my_any?
+puts
+puts "any? without block: "
+puts "Array-----"
+p array.any?
+puts "Hash-----"
+p hash.any?
 puts "-----------------------------------------------------------"
