@@ -140,9 +140,7 @@ module Enumerable
   end
 
   def my_inject(in1 = nil, in2 = nil)
-    res = nil
     arr = !is_a?(Array) ? to_a.flatten : flatten
-    operator = nil
     res = in1.nil? || !in1.is_a?(Numeric) ? 0 : in1
     return to_enum(:my_inject) if in1.nil? && in2.nil? && !block_given?
 
@@ -168,8 +166,6 @@ module Enumerable
     return to_enum(:my_inject) unless block_given?
 
     arr.my_each { |num| res = yield(res, num) }
-
-    res
   end
 end
 
