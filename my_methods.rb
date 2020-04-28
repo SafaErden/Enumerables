@@ -49,8 +49,10 @@ module Enumerable
       end
       return true
     end
-    return true unless block_given?
-
+    if !block_given?
+      my_each { |val| return false if val == false || val==nil }
+      return true
+    end
     my_each do |num|
       return false unless yield(num)
     end
@@ -159,4 +161,8 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-require './test_cases.rb'
+
+# require './test_cases.rb'
+puts [1, 2, 3].my_all?
+puts [1, 2, nil].my_all?
+puts [1, false, nil].my_all?
