@@ -12,7 +12,7 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
     i=0
-    self.my_each do |num|
+    my_each do |num|
       yield(num,i)
       i+=1
     end
@@ -22,7 +22,7 @@ module Enumerable
     return to_enum(:my_select) unless block_given?
     if self.is_a?(Array)
       arr=[]
-      self.my_each do |num| 
+      my_each do |num| 
        if yield(num)
         arr<<num
        end
@@ -30,7 +30,7 @@ module Enumerable
     arr
     elsif self.is_a?(Hash)
       hash={}
-      self.my_each do |key,val| 
+      my_each do |key,val| 
         if yield(key,val)
           hash[key]=val
         end
@@ -48,7 +48,7 @@ module Enumerable
       else
         my_each{|val| return false if val!=var}
       end
-      true
+      return true
     end
     return true unless block_given?
     my_each do |num| 
@@ -68,10 +68,10 @@ module Enumerable
       else
         my_each{|val| return true if val==var}
       end
-      false
+      return false
     end
     return true unless block_given?
-    self.my_each do |num| 
+    my_each do |num| 
     if yield(num)
     return true
     end
@@ -88,10 +88,10 @@ module Enumerable
       else
         my_each{|val| return false if val==var}
       end
-      true
+      return true
     end
     return false unless block_given?
-    self.my_each do |num| 
+    my_each do |num| 
     if yield(num)
     return false
     end
@@ -102,7 +102,7 @@ module Enumerable
   def my_count
     return self.size unless block_given?
     i=0
-    self.my_each do |num| 
+    my_each do |num| 
     if yield(num)
     i+=1
     end
@@ -110,16 +110,29 @@ module Enumerable
    i
   end
 
-  def my_map(proc=nil)
+  def my_map(var=nil)
+    arr=[]
+    if var.is_a?(Proc)
+      if self.is_a?(Array)
+        my_each do |num| 
+         arr<<var.call(num)
+        end
+      elsif self.is_a?(Hash)
+        my_each do |key,val| 
+          arr<<var.call(num)
+        end
+      end
+      return arr
+    end
 
     return to_enum(:my_map) unless block_given?
-    arr=[]
+    
     if self.is_a?(Array)
-      self.my_each do |num| 
+      my_each do |num| 
        arr<<yield(num)
       end
     elsif self.is_a?(Hash)
-      self.my_each do |key,val| 
+      my_each do |key,val| 
         arr<<yield(key,val)
       end
     end
@@ -130,11 +143,11 @@ module Enumerable
     return to_enum(:my_inject) unless block_given?
     i=0
     if self.is_a?(Array)
-      self.my_each do |num| 
+      my_each do |num| 
        i+=yield(num)
       end
     elsif self.is_a?(Hash)
-      self.my_each do |key,val| 
+      my_each do |key,val| 
         i+=yield(key,val)
       end
     end
