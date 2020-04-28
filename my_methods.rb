@@ -78,6 +78,18 @@ module Enumerable
   end
 
   def my_map
+    return to_enum(:my_select) unless block_given?
+    arr=[]
+    if self.is_a?(Array)
+      self.my_each do |num| 
+       arr<<yield(num)
+      end
+    elsif self.is_a?(Hash)
+      self.my_each do |key,val| 
+        arr<<yield(key,val)
+      end
+    end
+    arr
   end
 
   def my_inject
@@ -276,4 +288,31 @@ puts "Array-----"
 p array.count
 puts "Hash-----"
 p hash.count
+puts "-----------------------------------------------------------"
+puts
+puts "my_map AND map METHOD COMPARISON"
+puts
+puts "my_map with block: "
+puts "Array-----"
+p array.my_map{|val| val>2}
+puts "Hash-----"
+p hash.my_map{|key,val| key=2}
+puts 
+puts "map with block: "
+puts "Array-----"
+p array.map{|val| val>2}
+puts "Hash-----"
+p hash.map{|key,val| key=2}
+puts
+puts "my_map without block: "
+puts "Array-----"
+p array.my_map
+puts "Hash-----"
+p hash.my_map
+puts
+puts "map without block: "
+puts "Array-----"
+p array.map
+puts "Hash-----"
+p hash.map
 puts "-----------------------------------------------------------"
