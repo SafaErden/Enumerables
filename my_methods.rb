@@ -103,7 +103,12 @@ module Enumerable
     true
   end
 
-  def my_count
+  def my_count(var = nil)
+    i=0
+    unless var.nil?
+     my_each { |val| i+=1 if val==var }
+     return i
+    end
     return size unless block_given?
 
     i = 0
@@ -169,5 +174,4 @@ end
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
 # require './test_cases.rb'
-p [false, nil, false].my_none? #should return true
-p [1, 'demo', 2.2].my_none? #should return false
+p [1, 1, 2 ,3].my_count(1)  #should return 2
