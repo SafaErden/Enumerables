@@ -238,10 +238,4 @@ puts 'Array-----'
 p array.my_inject(5.0, :/) { |sum, n| sum * n }
 puts 'Hash-----'
 p hash.my_inject(5.0, :/) { |sum, n| sum * n }
-puts
-puts 'my_inject without block: '
-puts 'Array-----'
-p array.my_inject
-puts 'Hash-----'
-p hash.my_inject
 puts '-----------------------------------------------------------'
