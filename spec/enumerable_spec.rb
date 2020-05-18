@@ -69,6 +69,24 @@ RSpec.describe Enumerable do
     it 'should ' do
       expect(test1.my_inject(5.0, :/) { |sum, n| sum * n }).to eql(test1.inject(5.0, :/) { |sum, n| sum * n })
     end
+    
+    let(:array) { Array.new(10) { rand(0...10) } }
+    let(:operation) { proc { |sum, n| sum + n } }
+
+    context 'Test cases for my_all' do
+      it 'Array.new(10) { rand(0...10).my_inject(proc { |sum, n| sum + n }) ' do
+        expect(array.my_inject(&operation)).to eql(array.inject(&operation))
+      end
+      it 'Array.new(10) { rand(0...10).my_inject(:+)' do
+        expect(array.my_inject(:+)).to eql(array.inject(:+))
+      end
+      it 'Array.new(10) { rand(0...10).my_inject(2,:*)' do
+        expect(array.my_inject(2, :*)).to eql(array.inject(2, :*))
+      end
+      it 'Array.new(10) { rand(0...10).my_inject(2){|product, n| product * n}' do
+        expect(array.my_inject(2) { |product, n| product * n }).to eql(array.inject(2) { |product, n| product * n })
+      end
+    end
   end
   
 end
