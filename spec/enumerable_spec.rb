@@ -28,7 +28,7 @@ RSpec.describe Enumerable do
 
   describe '#my_all?' do
     it 'should check when the given condition is true for the itens in the array' do
-      expect(test1.my_all? { |x| x == 1 }).to eql(test1.all? {|x| x == 1})
+      expect(test1.my_all? { |x| x == 1 }).to eql(test1.all? { |x| x == 1 })
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Enumerable do
 
   describe '#my_none?' do
     it 'should check if the given condition is true for every item in the array' do
-      expect(test4.my_none? { |x| x > 0 }).to eql(test4.none? {|x| x > 0 })
+      expect(test4.my_none? { |x| x > 0 }).to eql(test4.none? { |x| x > 0 })
     end
   end
 
@@ -55,16 +55,16 @@ RSpec.describe Enumerable do
     let(:operation) { proc { |sum, n| sum + n } }
 
     context 'Test cases for my_all' do
-      it 'Array.new(10) { rand(0...10).my_inject(proc { |sum, n| sum + n }) ' do
+      it 'should receive a proc without error' do
         expect(array.my_inject(&operation)).to eql(array.inject(&operation))
       end
-      it 'Array.new(10) { rand(0...10).my_inject(:+)' do
+      it 'should receive a math operator in parenthesis without error' do
         expect(array.my_inject(:+)).to eql(array.inject(:+))
       end
-      it 'Array.new(10) { rand(0...10).my_inject(2,:*)' do
+      it 'should receive an integer as the initial value and a math operator in parenthesis without error' do
         expect(array.my_inject(2, :*)).to eql(array.inject(2, :*))
       end
-      it 'Array.new(10) { rand(0...10).my_inject(2){|product, n| product * n}' do
+      it 'should receive blocks' do
         expect(array.my_inject(2) { |product, n| product * n }).to eql(array.inject(2) { |product, n| product * n })
       end
     end

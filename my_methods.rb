@@ -176,5 +176,3 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-
-

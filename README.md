@@ -45,6 +45,12 @@ After you have downloaded and have a local copy on your computer, open the folde
 ruby my_enumerable.rb
 ```
 
+To test it on your local, use your terminal/commandline window and run:
+
+```ruby
+rspec
+```
+
 ## Author
 
 👤 **Safa ERDEN**
