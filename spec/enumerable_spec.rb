@@ -7,6 +7,7 @@ RSpec.describe Enumerable do
   let(:test2) { [3] }
   let(:test3) { [nil, true, 10] }
   let(:test4) { [1, 2, 3, 1, 2, 3, 4, 1, 2, 3] }
+  let(:test5) { [false, false, false] }
 
   describe '#my_each' do
     it 'should iterate through an array' do
@@ -27,8 +28,11 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_all?' do
-    it 'should check when the given condition is true for the itens in the array' do
+    it 'should return true if all of the elements of the Enumerable pass the condition given by the block' do
       expect(test1.my_all? { |x| x == 1 }).to eql(test1.all? { |x| x == 1 })
+    end
+    it 'should not return true if any of the elements of the Enumerable pass the condition given by the block' do
+      expect(test1.my_all? { |x| x < 1 }).not_to eql(true)
     end
   end
 
@@ -36,17 +40,26 @@ RSpec.describe Enumerable do
     it 'should check whether the given condition is true for every item in the array' do
       expect(test3.my_any? { |x| x == true }).to eql(true)
     end
+    it "shouldn't return true if none of the elements of the Enumerable pass the condition given by the block" do
+      expect(test5.my_any? { |x| x == true }).not_to eql(true)
+    end
   end
 
   describe '#my_none?' do
     it 'should check if the given condition is true for every item in the array' do
-      expect(test4.my_none? { |x| x > 0 }).to eql(test4.none? { |x| x > 0 })
+      expect(test4.my_none? { |x| x > 0 }).to eql(false)
+    end
+    it 'should not return true check if the given condition is false for every item in the array' do
+      expect(test4.my_none? { |x| x > 0 }).not_to eql(true)
     end
   end
 
   describe '#my_map' do
     it 'should apply the logic of the block given to every element of the array' do
       expect(test1.my_map { |el| el**2 }).to eq([25, 16, 4])
+    end
+    it 'should\'t apply different logic of the block given to every element of the array' do
+      expect(test1.my_map { |el| el**2 }).not_to eq([21, 6, 4])
     end
   end
 
