@@ -1,6 +1,7 @@
 # Enumerable Methods
 
 > This is the first solo project of the Microverse Ruby curriculum. In this project Ruby enumerable methods are created from the scracth.
+> We also implemented a Test Drvien Development with Rspec at this project, so we can make sure that everything is working as it should.
 
 ## Created Methods Listed Below
 
@@ -17,6 +18,7 @@
 ## Built With
 
 - Ruby 2.7.1
+- Rspec
 
 ## Live Demo
 
