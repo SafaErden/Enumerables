@@ -9,13 +9,13 @@ RSpec.describe Enumerable do
   let(:test4) { [1, 2, 3, 1, 2, 3, 4, 1, 2, 3] }
 
   describe '#my_each' do
-    it 'should interate through an array' do
-      expect(test1.my_each { |x| p x * 4 }).to eql(test1.each { |x| p x * 4 })
+    it 'should iterate through an array' do
+      expect(test1.my_each { |x| p x + 1 }).to eql(test1.each { |x| p x + 1 })
     end
   end
 
   describe '#my_each_with_index' do
-    it 'should interate through an array and its index' do
+    it 'should iterate through an array and its index' do
       expect(test1.my_each_with_index { |x, y| x - y }).to eql(test1.each_with_index { |x, y| x - y })
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Enumerable do
 
   describe '#my_all?' do
     it 'should check when the given condition is true for the itens in the array' do
-      expect(test1.my_all? { |x| x == 1 }).to eql(false)
+      expect(test1.my_all? { |x| x == 1 }).to eql(test1.all? {|x| x == 1})
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Enumerable do
 
   describe '#my_none?' do
     it 'should check if the given condition is true for every item in the array' do
-      expect(test4.my_none? { |x| x > 0 }).to eql(false)
+      expect(test4.my_none? { |x| x > 0 }).to eql(test4.none? {|x| x > 0 })
     end
   end
 

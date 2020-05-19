@@ -177,6 +177,4 @@ end
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
-require './test_cases.rb'
-words = %w[dog door rod blade]
-p multiply_els(words)
+
