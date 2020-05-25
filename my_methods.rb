@@ -121,7 +121,7 @@ module Enumerable
   def my_map(var = nil)
     arr = []
     if var.is_a?(Proc)
-      if is_a?(Array)
+      if is_a?(Array) || is_a?(Range)
         my_each { |num| arr << var.call(num) }
       elsif is_a?(Hash)
         my_each { |_key, _val| arr << var.call(num) }
@@ -131,7 +131,7 @@ module Enumerable
 
     return to_enum(:my_map) unless block_given?
 
-    if is_a?(Array)
+    if is_a?(Array) || is_a?(Range)
       my_each { |num| arr << yield(num) }
     elsif is_a?(Hash)
       my_each { |key, val| arr << yield(key, val) }
@@ -176,7 +176,3 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-
-require './test_cases.rb'
-words = %w[dog door rod blade]
-p multiply_els(words)
